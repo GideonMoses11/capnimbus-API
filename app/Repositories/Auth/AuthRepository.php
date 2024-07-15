@@ -500,7 +500,7 @@ class AuthRepository{
                 'success'=> true,
                 'message'=> "Plans have been found successfully!",
                 'plans'=> $plans,
-            ],201);
+            ],200);
         }else {
             return response()->json([
                 'status' => 401,
