@@ -5,9 +5,10 @@ namespace App\Repositories\Auth;
 use Throwable;
 use Carbon\Carbon;
 use App\Models\Kyc;
-use App\Models\User;
+use App\Models\Plan;
 // use App\Mail\VerifyMail;
 // use App\Mail\RegisterMail;
+use App\Models\User;
 use Ramsey\Uuid\Uuid;
 use App\Models\Profile;
 use App\Mail\WelcomeMail;
@@ -487,6 +488,25 @@ class AuthRepository{
                 'success'=> false,
                 'message'=> "kyc not found...try again!",
             ],401);
+        }
+    }
+
+    public function listPlan(){
+
+        $plans = Plan::all();
+
+        if($plans){
+            return response()->json([
+                'success'=> true,
+                'message'=> "Plans have been found successfully!",
+                'plans'=> $plans,
+            ],201);
+        }else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Something went wrong!',
+                'success' => false,
+            ]);
         }
     }
 }

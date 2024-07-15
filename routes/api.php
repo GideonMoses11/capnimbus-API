@@ -41,6 +41,7 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::post('/verify-kyc', [AuthController::class, 'verifyKYC']);
     Route::get('/my-kyc', [AuthController::class, 'myKYC']);
+    Route::get('/plans', [AuthController::class, 'listPlan']);
 });
 
 

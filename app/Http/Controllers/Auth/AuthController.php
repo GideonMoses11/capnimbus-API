@@ -30,7 +30,7 @@ class AuthController extends Controller
     {
         $this->authRepository = $authRepository;
 
-        $this->middleware('auth:api', ['except' => ['signin', 'signup', 'verified', 'resendLink','resetVerify','resetPassword', 'forgotPassword', 'forgotPin', 'resetPin']]);
+        $this->middleware('auth:api', ['except' => ['signin', 'signup', 'verified', 'resendLink','resetVerify','resetPassword', 'forgotPassword', 'forgotPin', 'resetPin', 'listPlan']]);
     }
 
     public function signup(Request $request) {
@@ -115,6 +115,11 @@ class AuthController extends Controller
     public function myKYC(){
 
         return $this->authRepository->myKYC();
+    }
+
+    public function listPlan(){
+
+        return $this->authRepository->listPlan();
     }
 
 
