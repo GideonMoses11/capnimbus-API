@@ -10,8 +10,11 @@ use App\Models\Plan;
 // use App\Mail\RegisterMail;
 use App\Models\User;
 use Ramsey\Uuid\Uuid;
+use App\Models\Deposit;
 use App\Models\Profile;
 use App\Mail\WelcomeMail;
+use App\Models\Investment;
+use App\Models\Withdrawal;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\PasswordResetMail;
@@ -195,7 +198,18 @@ class AuthRepository{
         $user = User::where('id',auth()->user()->id)
         // ->with('profile')
         ->first();
-        return response()->json($user,200);
+
+        $userId = auth()->user()->id;
+
+        $depositSum = Deposit::where('user_id', $userId)->sum('amount_usd');
+        $withdrawalSum = Withdrawal::where('user_id', $userId)->sum('amount_usd');
+        $investmentSum = Investment::where('user_id', $userId)->sum('amount_usd');
+        return response()->json([
+                    'user' => $user,
+                    'depositSum' => $depositSum,
+                    'withdrawalSum' => $withdrawalSum,
+                    'investmentSum' => $investmentSum,
+        ],200);
     }
 
     public function signout() {
@@ -264,7 +278,7 @@ class AuthRepository{
 
             $isOtherToken = DB::table('password_reset_tokens')->where('email', $email);
 
-            $url = "https://peppi.vercel.app/auth/reset-password?token=$token&email=$email";
+            $url = "https://capnimbus.com/auth/reset-password?token=$token&email=$email";
 
             // $token = Str::random(10);
             if(!$isOtherToken->first()){

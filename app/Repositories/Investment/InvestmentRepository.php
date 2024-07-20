@@ -30,7 +30,7 @@ class InvestmentRepository{
 
         if(request()->amount_usd < $plan->min_price){
             return response()->json([
-                'message' => `minimum investment amount is: $plan->min_price`,
+                'message' => 'amount selected is below minimum investment price',
                 'status' => 401,
                 'success' => false,
             ]);
