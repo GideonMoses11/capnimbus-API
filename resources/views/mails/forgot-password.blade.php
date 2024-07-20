@@ -1,5 +1,5 @@
 @extends('mails.layouts.mailstyles')
-@include('mails.layouts.base')
+<!-- @include('mails.layouts.base') -->
 <table width="640" cellpadding="0" cellspacing="0" border="0" class="wrapper" bgcolor="#FFFFFF">
     <tr>
         <td height="15" style="font-size:10px; line-height:10px;">&nbsp;</td>
@@ -24,7 +24,7 @@
                     </td>
                 </tr>
             </table>
-@include('mails.layouts.new_mailfooter')
+<!-- @include('mails.layouts.new_mailfooter') -->
 
 
 <style>
