@@ -30,6 +30,12 @@ class WithdrawalRepository{
 
         $account_balance = $userAccount->usd_balance;
 
+        $requested_amount = request()->amount_usd;
+
+        // Calculate 5% charge
+        $charge = $requested_amount * 0.05;
+        $amount_after_charge = $requested_amount - $charge;
+
         if(request()->amount_usd > $account_balance){
             return response()->json([
                 'message' => 'Insufficient funds',
@@ -40,7 +46,7 @@ class WithdrawalRepository{
 
         $withdrawal = Withdrawal::create([
             'reference' => $this->generateUniqueReference(),
-            'amount_usd' => request()->amount_usd,
+            'amount_usd' => $amount_after_charge,
             'wallet_address' => auth()->user()->kyc->wallet_address ?: request()->wallet_address,
             'user_id' => auth()->user()->id
         ]);
@@ -51,6 +57,7 @@ class WithdrawalRepository{
                     'status' => 201,
                     'success' => true,
                     'withdrawal' => $withdrawal,
+                    'charge' => $charge,
                 ]);
             } else {
                 return response()->json([
